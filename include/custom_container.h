@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <iostream>
 // forward linked list
 template <class T, class Allocator = std::allocator<T>> class List {
 private:
