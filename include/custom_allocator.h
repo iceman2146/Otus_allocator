@@ -47,8 +47,7 @@ template <typename T> struct Chunk {
     void *p = end_ptr;
     end_ptr = ((char *)end_ptr) + n * sizeof(T);
     occupied += n;
-    std::cout << " - Chunk: " << memory_ptr << " - Occupied: " << occupied
-              << std::endl;
+
     return p;
   }
 
@@ -58,8 +57,7 @@ template <typename T> struct Chunk {
     }
 
     released += n;
-    std::cout << " - Chunk: " << memory_ptr << " - Released: " << released
-              << std::endl;
+
     if (released == occupied) {
       free_memory();
     }
@@ -92,7 +90,6 @@ public:
   };
 
   CustomAllocator() = default;
-  //~CustomAllocator() = default;
 
   template <typename U, size_t S>
   CustomAllocator(const CustomAllocator<U, S> &) {}
@@ -110,7 +107,6 @@ public:
     }
   }
 
-  // Выделение памяти.
   pointer allocate(const std::size_t n) {
     if (first_allocator_chunk == nullptr) {
       std::size_t items_number = (n > items_per_chunk) ? n : items_per_chunk;
@@ -144,14 +140,12 @@ public:
 
     last_allocator_chunk = last_allocator_chunk->next;
     alloc_requests_number++;
-    std::cout << "Allocate next chunk. Required: " << n
-              << " Allocated: " << items_number << std::endl;
     return reinterpret_cast<T *>(last_allocator_chunk->occupy_memory(n));
   }
 
   void deallocate(pointer p, const std::size_t &n) {
     if (first_allocator_chunk == nullptr) {
-      std::cout << "Unexpected deallocte error!" << std::endl;
+      std::cout << "Unexpected deallocate error!" << std::endl;
       return;
     }
 
@@ -190,10 +184,7 @@ public:
   }
 
   template <typename U, typename... Args> void construct(U *p, Args &&...args) {
-    std::cout << "Construct address: " << p << " size " << sizeof(U) << " "
-              << typeid(U).name() << std::endl;
-
-    new (p) U(std::forward<Args>(args)...);
+       new (p) U(std::forward<Args>(args)...);
   }
 
   template <typename U> void destroy(pointer p) { p->~U(); }

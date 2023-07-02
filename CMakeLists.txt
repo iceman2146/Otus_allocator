@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.26)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+set(MAIN_APP_NAME "main")
+set(PROJECT_NAME "allocator")
+
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-project(allocator VERSION ${PROJECT_VESRION})
+project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
 ##????????? ???? ????
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -26,11 +29,11 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 configure_file(version.h.in version.h) 
+include_directories(include)
+add_executable(${MAIN_APP_NAME} src/main.cpp)
+add_library(Utils src/Utils.cpp)
 
-add_executable(main main.cpp)
-add_library(Utils Utils.cpp)
-
-set_target_properties(main Utils  PROPERTIES
+set_target_properties(${MAIN_APP_NAME} Utils  PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
@@ -39,13 +42,13 @@ target_include_directories(Utils
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
 
-target_link_libraries(main PRIVATE
+target_link_libraries(${MAIN_APP_NAME} PRIVATE
     Utils
 )
 
 
 
-install(TARGETS main RUNTIME DESTINATION bin)
+install(TARGETS ${MAIN_APP_NAME} RUNTIME DESTINATION bin COMPONENT application)
 
 set(CPACK_GENERATOR DEB)
 
