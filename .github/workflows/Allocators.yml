@@ -1,7 +1,7 @@
 name: Homework_Allocator
 
 
-run-name: ${{ github.actor }}Allocator ????????? ??
+run-name: ${{ github.actor }}Allocator
 on:
   push:
     branches:
@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Homework_3-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: Homework_3-0.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./Homework_Allocator.${{ github.run_number }}-Linux.deb
+          asset_name: Homework_Allocator.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
     
