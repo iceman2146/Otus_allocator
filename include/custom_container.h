@@ -55,7 +55,7 @@ public:
     total_number = 0;
   }
 
-  size_t get_number() const { return total_number; }
+  size_t size() const { return total_number; }
 
   void push_back(const T &value) {
     Node *own_ptr = node_alloc.allocate(1);
