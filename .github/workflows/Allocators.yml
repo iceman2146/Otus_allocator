@@ -5,7 +5,7 @@ run-name: ${{ github.actor }}Allocator ????????? ??
 on:
   push:
     branches:
-      - main
+      - master
       - feature/github_actions
 
 jobs:
