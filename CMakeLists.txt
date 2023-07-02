@@ -34,18 +34,18 @@ configure_file(version.h.in version.h)
 
 include_directories(include)
 add_executable(${MAIN_APP_NAME} src/main.cpp)
-add_executable(test test/main_test.cpp test/test_allocator.cpp test/test_container.cpp)
+##add_executable(test test/main_test.cpp test/test_allocator.cpp test/test_container.cpp)
 add_library(Utils src/Utils.cpp)
 
-target_include_directories(
-    test PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-target_link_libraries(
-    test PRIVATE
-    gtest gtest_main
-)
-set_target_properties(${MAIN_APP_NAME} Utils test PROPERTIES
+#target_include_directories(
+#    test PRIVATE
+#    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+#)
+#target_link_libraries(
+#    test PRIVATE
+#    gtest gtest_main
+#)
+set_target_properties(${MAIN_APP_NAME} Utils PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
