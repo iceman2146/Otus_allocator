@@ -27,14 +27,18 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./main.deb
-          asset_name: main.deb
-          asset_content_type: application/vnd.debian.binary-package
-    
+  - name: build-deb-action
+  # You may pin to the exact commit or the version.
+  # uses: jiro4989/build-deb-action@d38d2efb9670d446ad836cc638d9fe871524af6b
+  uses: jiro4989/build-deb-action@v2
+  with:
+    # Package name of debian package.
+    package: main
+    # Directory of release files.
+    package_root: ./
+    # Package maintainer name.
+    maintainer: application/vnd.debian.binary-package
+    # Package version.
+    version: 1
+
+    compress_type: # optional, default is gzip
