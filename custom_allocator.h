@@ -12,7 +12,7 @@ const constexpr int default_limit = 10;
 
 template <typename T> struct Chunk {
   void *memory_ptr = nullptr;
-  .void *end_ptr = nullptr;
+  void *end_ptr = nullptr;
 
   std::size_t size = 0;
   std::size_t occupied = 0;

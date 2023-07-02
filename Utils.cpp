@@ -6,6 +6,11 @@
 #include <map>
 #include <string>
 
+#include "version.h"
+
+int version() {
+    return PROJECT_VERSION_PATCH;
+}
 
 using AllocatorInt = CustomAllocator<int, 10>;
 using AllocatorPair = CustomAllocator<std::pair<int, int>, 10>;

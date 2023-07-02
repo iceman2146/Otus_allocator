@@ -11,8 +11,7 @@ private:
   };
 
   using AllocatorTraits = std::allocator_traits<Allocator>;
-  using node_alloc_t =
-      typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
+  using node_alloc_t = typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
   node_alloc_t node_alloc;
 
 public:
