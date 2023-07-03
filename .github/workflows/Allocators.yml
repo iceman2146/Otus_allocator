@@ -41,4 +41,4 @@ jobs:
     # Package version.
     version: 1
 
-    compress_type: # optional, default is gzip
+    compress_type:
