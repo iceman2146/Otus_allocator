@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.26)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 set(MAIN_APP_NAME "main")
 
 set(PROJECT_NAME "allocator")
 
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
-##????????? ???? ????
+project(${PROJECT_NAME} VERSION ${PROJECT_VERSION})
+
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
   RESULT_VARIABLE result
@@ -25,7 +25,7 @@ endif()
 if(MSVC)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 endif()
-##?????????
+
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
@@ -45,6 +45,7 @@ add_library(Utils src/Utils.cpp)
 #    test PRIVATE
 #    gtest gtest_main
 #)
+
 set_target_properties(${MAIN_APP_NAME} Utils PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
@@ -53,7 +54,22 @@ set_target_properties(${MAIN_APP_NAME} Utils PROPERTIES
 target_include_directories(Utils
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
-
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
+    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(${MAIN_APP_NAME} PRIVATE 
+        -g
+        -Wall
+        -Wextra
+        -Werror
+        -pedantic
+    )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(${MAIN_APP_NAME} PRIVATE
+        /EHsc
+        /W4
+        /WX
+    )
+endif()
 target_link_libraries(${MAIN_APP_NAME} PRIVATE
     Utils
 )
