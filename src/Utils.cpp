@@ -3,6 +3,7 @@
 #include "custom_allocator.h"
 #include "custom_container.h"
 #include "version.h"
+#include <forward_list>
 #include <iostream>
 #include <map>
 #include <string>
@@ -56,11 +57,13 @@ void test_std_map_with_custom_allocator() {
   }
 
   std::cout << std::endl;
+
   for (auto test_pair : test_map) {
     std::cout << test_pair.first << " " << test_pair.second << std::endl;
   }
   std::cout << std::endl;
 }
+
 
 void test_custom_container_with_custom_allocator() {
   using TestList = List<int, AllocatorInt>;

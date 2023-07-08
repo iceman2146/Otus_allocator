@@ -12,6 +12,7 @@ configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 if(result)
   message(FATAL_ERROR "CMake step for googletest failed: ${result}")
 endif()
@@ -54,22 +55,7 @@ set_target_properties(${MAIN_APP_NAME} Utils PROPERTIES
 target_include_directories(Utils
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(${MAIN_APP_NAME} PRIVATE 
-        -g
-        -Wall
-        -Wextra
-        -Werror
-        -pedantic
-    )
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(${MAIN_APP_NAME} PRIVATE
-        /EHsc
-        /W4
-        /WX
-    )
-endif()
+
 target_link_libraries(${MAIN_APP_NAME} PRIVATE
     Utils
 )

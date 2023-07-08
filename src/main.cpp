@@ -1,18 +1,19 @@
 #include "Utils.h"
 #include <iostream>
-#include "custom_container.h"
+
 
 int main () {
-	Separator("test_std_map_with_custom_allocator",80);
+	Separator("test_std_map_with_custom_allocator",10);
 	test_std_map_with_custom_allocator();
 
-	Separator("test_std_map_with_std_allocator",80);
-	test_std_map_with_std_allocator();
+	Separator("test_std_map_with_std_allocator",10);
+	//test_std_map_with_std_allocator();
 
-	Separator("test_custom_container_with_custom_allocator",80);
-	test_custom_container_with_custom_allocator();
+	Separator("test_custom_container_with_custom_allocator",10);
+	//test_custom_container_with_custom_allocator();
 
-	Separator("test_custom_container_with_std_allocator",80);
-	test_custom_container_with_std_allocator();
-
+	Separator("test_custom_container_with_std_allocator",10);
+	//test_custom_container_with_std_allocator();
+	system("pause");
+	return 0;
 }

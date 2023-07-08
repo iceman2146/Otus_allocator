@@ -31,6 +31,7 @@ template <typename T> struct Chunk {
     std::free(memory_ptr);
     memory_ptr = nullptr;
     std::cout << "FREE all memory" << std::endl;
+    
   }
   std::size_t memory_space() { return sizeof(T) * occupied; }
   void *occupy_memory(const std::size_t &n) {

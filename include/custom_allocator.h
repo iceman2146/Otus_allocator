@@ -8,7 +8,6 @@
 #include <new>
 #include <utility>
 
-
 const int limit = 10;
 
 template <typename T, size_t N = limit> class CustomAllocator {
@@ -22,10 +21,18 @@ public:
     using other = CustomAllocator<U, N>;
   };
 
-  CustomAllocator() = default;
+private:
+  size_type items_per_chunk;
+  Chunk<value_type> *first_allocator_chunk = nullptr;
+  Chunk<value_type> *last_allocator_chunk = nullptr;
+  size_type alloc_requests_number = 0;
+  Chunk<value_type> *allocate_new_chunk(const size_type &items_number);
+public:
+
+  CustomAllocator() {items_per_chunk=limit;}
 
   template <typename U, size_type S>
-  CustomAllocator(const CustomAllocator<U, S> &) {}
+  CustomAllocator(const CustomAllocator<U, S>) {}
 
   ~CustomAllocator() {
     std::cout << "Allocator destructor" << std::endl;
@@ -35,6 +42,8 @@ public:
     while (last_allocator_chunk != nullptr) {
       tmp_chunk = last_allocator_chunk->next;
       last_allocator_chunk->free_memory();
+      delete last_allocator_chunk;
+      last_allocator_chunk = tmp_chunk;
     }
   }
   pointer allocate(const size_type n) {
@@ -116,16 +125,6 @@ public:
   template <typename U, typename... Args> void construct(U *p, Args &&...args) {
     new (p) U(std::forward<Args>(args)...);
   }
-
-private:
-  size_type items_per_chunk;
-
-  Chunk<value_type> *first_allocator_chunk = nullptr;
-  Chunk<value_type> *last_allocator_chunk = nullptr;
-
-  size_type alloc_requests_number = 0;
-
-  Chunk<value_type> *allocate_new_chunk(const size_type &items_number);
 };
 
 template <class T, size_t N, class U, size_t S>
