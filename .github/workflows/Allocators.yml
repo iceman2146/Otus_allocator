@@ -1,11 +1,11 @@
 name: Homework_Allocator
 
 
-run-name: ${{ github.actor }}Allocator
+run-name: ${{ github.actor }} Allocator ????????? ??
 on:
   push:
     branches:
-      - master
+      - main
       - feature/github_actions
 
 jobs:
@@ -27,18 +27,14 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
-  - name: build-deb-action
-  # You may pin to the exact commit or the version.
-  # uses: jiro4989/build-deb-action@d38d2efb9670d446ad836cc638d9fe871524af6b
-  uses: jiro4989/build-deb-action@v2
-  with:
-    # Package name of debian package.
-    package: main
-    # Directory of release files.
-    package_root: ./
-    # Package maintainer name.
-    maintainer: application/vnd.debian.binary-package
-    # Package version.
-    version: 1
-
-    compress_type:
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./Homework.${{ github.run_number }}-Linux.deb
+          asset_name: Homework.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
+    
