@@ -35,6 +35,36 @@ public:
   };
 
   List() : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0} {}
+  List(const List &other)
+    {
+        if (other.first_node_ptr != nullptr)
+        {
+
+            Node *other_ptr_toCopy = other.first_node_ptr;
+            Node *otherPtrTemp = nullptr;
+
+            while (other_ptr_toCopy != nullptr)
+            {
+                otherPtrTemp = new Node(other_ptr_toCopy->data);
+
+                if (first_node_ptr == nullptr)
+                {
+                    first_node_ptr = otherPtrTemp;
+                    last_node_ptr = otherPtrTemp;
+                }
+                else
+                {
+                    last_node_ptr->next_node = otherPtrTemp;
+                    last_node_ptr = otherPtrTemp;
+                }
+
+                other_ptr_toCopy = other_ptr_toCopy->next_node;
+            }
+
+            total_number = other.total_number;
+        }
+       
+    }
   ~List() { clear(); }
 
   void clear() {
@@ -116,7 +146,24 @@ public:
 
     return current_node_ptr->data;
   }
+  List &operator=(const List & rhs)
+  {
+     List temp{rhs};
+        Node *last = last_node_ptr;
+        last_node_ptr = temp.last_node_ptr;
+        temp.last_node_ptr = last;
 
+        Node *first = first_node_ptr;
+        first_node_ptr = temp.first_node_ptr;
+        temp.first_node_ptr = first;
+
+        size_t size = total_number;
+        total_number = temp.total_number;
+        temp.total_number = size;
+
+        return *this;
+
+  }
   Iterator begin() const { return Iterator(first_node_ptr); }
 
   Iterator last_valid() const {

@@ -90,3 +90,19 @@ void test_custom_container_with_std_allocator() {
   std::cout << list << std::endl;
   std::cout << std::endl;
 }
+
+void ryzhikov_test()
+{
+  List<int> a;
+  a.push_back(42);
+  auto b = a;
+  std::cout<<"A:\n";
+  std::cout << a << std::endl;
+  std::cout<<"B:\n";
+  std::cout << b << std::endl;
+  
+
+
+  
+
+}
