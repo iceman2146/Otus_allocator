@@ -95,7 +95,7 @@ void ryzhikov_test()
 {
   List<int> a;
   a.push_back(42);
-  auto b = a;
+  auto b=a;
   std::cout<<"A:\n";
   std::cout << a << std::endl;
   std::cout<<"B:\n";

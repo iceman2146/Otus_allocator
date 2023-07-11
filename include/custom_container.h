@@ -10,7 +10,9 @@ private:
     Node *next_node;
     T data;
   };
-
+  Node *first_node_ptr;
+  Node *last_node_ptr;
+  size_t total_number;
   using AllocatorTraits = std::allocator_traits<Allocator>;
   using node_alloc_t = typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
   node_alloc_t node_alloc;
@@ -37,6 +39,25 @@ public:
   List() : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0} {}
   List(const List &other)
     {
+      
+     if(!other.first_node_ptr) {
+        total_number = 0;
+        first_node_ptr = nullptr;
+        return;
+    }
+
+    first_node_ptr = new Node(*other.first_node_ptr);
+    Node* current = first_node_ptr;
+    total_number = 1;
+
+    for(Node* t = other.first_node_ptr->next_node; t != nullptr; t = t->next_node) {
+        current->next_node = new Node(*t);
+        current = current->next_node;
+        ++total_number;
+    }
+    current->next_node = nullptr;
+
+      /*
         if (other.first_node_ptr != nullptr)
         {
 
@@ -62,7 +83,7 @@ public:
             }
 
             total_number = other.total_number;
-        }
+        }*/
        
     }
   ~List() { clear(); }
@@ -148,7 +169,7 @@ public:
   }
   List &operator=(const List & rhs)
   {
-     List temp{rhs};
+     List temp(rhs);
         Node *last = last_node_ptr;
         last_node_ptr = temp.last_node_ptr;
         temp.last_node_ptr = last;
@@ -201,9 +222,7 @@ private:
   }
 
 private:
-  Node *first_node_ptr;
-  Node *last_node_ptr;
-  size_t total_number;
+ 
   Iterator owl_iterator;
 };
 
