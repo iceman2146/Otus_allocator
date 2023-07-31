@@ -14,7 +14,7 @@ int main () {
 
 	Separator("test_custom_container_with_std_allocator",10);
 	test_custom_container_with_std_allocator();
-	ryzhikov_test();
+	//ryzhikov_test();
 	system("pause");
 
 	

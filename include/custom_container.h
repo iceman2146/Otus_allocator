@@ -28,7 +28,10 @@ public:
       node_ptr = node_ptr->next_node;
       return node_ptr;
     }
-    T get() { return node_ptr->data; }
+    T get() { 
+      if(node_ptr!=nullptr)
+        return node_ptr->data;
+      }
 
     bool operator!=(const Iterator &other) {
       return !(node_ptr == other.node_ptr);
@@ -40,55 +43,6 @@ public:
 
   List() : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0} {}
   List(const List &other) : first_node_ptr{other.first_node_ptr}, last_node_ptr{other.last_node_ptr}, total_number{other.total_number}{}
-  /*List(const List &other) {
-
-    if (!other.first_node_ptr) {
-      total_number = 0;
-      first_node_ptr = nullptr;
-      return;
-    }
-
-    first_node_ptr = new Node(*other.first_node_ptr);
-    Node *current = first_node_ptr;
-    total_number = 1;
-
-    for (Node *t = other.first_node_ptr->next_node; t != nullptr;
-         t = t->next_node) {
-      current->next_node = new Node(*t);
-      current = current->next_node;
-      ++total_number;
-    }
-    current->next_node = nullptr;
-
-    /*
-      if (other.first_node_ptr != nullptr)
-      {
-
-          Node *other_ptr_toCopy = other.first_node_ptr;
-          Node *otherPtrTemp = nullptr;
-
-          while (other_ptr_toCopy != nullptr)
-          {
-              otherPtrTemp = new Node(other_ptr_toCopy->data);
-
-              if (first_node_ptr == nullptr)
-              {
-                  first_node_ptr = otherPtrTemp;
-                  last_node_ptr = otherPtrTemp;
-              }
-              else
-              {
-                  last_node_ptr->next_node = otherPtrTemp;
-                  last_node_ptr = otherPtrTemp;
-              }
-
-              other_ptr_toCopy = other_ptr_toCopy->next_node;
-          }
-
-          total_number = other.total_number;
-      }
-      
-  }*/
   ~List() { clear(); }
 
   void clear() {
