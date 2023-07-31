@@ -42,7 +42,31 @@ public:
   };
 
   List() : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0} {}
-  List(const List &other) : first_node_ptr{other.first_node_ptr}, last_node_ptr{other.last_node_ptr}, total_number{other.total_number}{}
+  List(const List &other) : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0}{
+    
+    if (other.first_node_ptr != nullptr)
+      {
+          Node *other_ptr_toCopy = other.first_node_ptr;
+          Node *otherPtrTemp = nullptr;
+          
+          while (other_ptr_toCopy != nullptr)
+          {
+              otherPtrTemp = new Node(other_ptr_toCopy->data);
+              if (first_node_ptr == nullptr)
+              {
+                  first_node_ptr = otherPtrTemp;
+                  last_node_ptr = otherPtrTemp;
+              }
+              else
+              {
+                  last_node_ptr->next_node = otherPtrTemp;
+                  last_node_ptr = otherPtrTemp;
+              }
+              other_ptr_toCopy = other_ptr_toCopy->next_node;
+          }
+          total_number = other.total_number;
+      }
+  }
   ~List() { clear(); }
 
   void clear() {

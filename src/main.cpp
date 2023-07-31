@@ -3,7 +3,7 @@
 
 
 int main () {
-	Separator("test_std_map_with_custom_allocator",10);
+	/*Separator("test_std_map_with_custom_allocator",10);
 	test_std_map_with_custom_allocator();
 
 	Separator("test_std_map_with_std_allocator",10);
@@ -13,8 +13,8 @@ int main () {
 	test_custom_container_with_custom_allocator();
 
 	Separator("test_custom_container_with_std_allocator",10);
-	test_custom_container_with_std_allocator();
-	//ryzhikov_test();
+	test_custom_container_with_std_allocator();*/
+	ryzhikov_test();
 	system("pause");
 
 	
