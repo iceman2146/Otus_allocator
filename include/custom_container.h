@@ -1,6 +1,7 @@
 #pragma once
-#include <memory>
 #include <iostream>
+#include <memory>
+
 // forward linked list
 template <class T, class Allocator = std::allocator<T>> class List {
 private:
@@ -14,7 +15,8 @@ private:
   Node *last_node_ptr;
   size_t total_number;
   using AllocatorTraits = std::allocator_traits<Allocator>;
-  using node_alloc_t = typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
+  using node_alloc_t =
+      typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
   node_alloc_t node_alloc;
 
 public:
@@ -37,55 +39,56 @@ public:
   };
 
   List() : first_node_ptr{nullptr}, last_node_ptr{nullptr}, total_number{0} {}
-  List(const List &other)
-    {
-      
-     if(!other.first_node_ptr) {
-        total_number = 0;
-        first_node_ptr = nullptr;
-        return;
+  List(const List &other) : first_node_ptr{other.first_node_ptr}, last_node_ptr{other.last_node_ptr}, total_number{other.total_number}{}
+  /*List(const List &other) {
+
+    if (!other.first_node_ptr) {
+      total_number = 0;
+      first_node_ptr = nullptr;
+      return;
     }
 
     first_node_ptr = new Node(*other.first_node_ptr);
-    Node* current = first_node_ptr;
+    Node *current = first_node_ptr;
     total_number = 1;
 
-    for(Node* t = other.first_node_ptr->next_node; t != nullptr; t = t->next_node) {
-        current->next_node = new Node(*t);
-        current = current->next_node;
-        ++total_number;
+    for (Node *t = other.first_node_ptr->next_node; t != nullptr;
+         t = t->next_node) {
+      current->next_node = new Node(*t);
+      current = current->next_node;
+      ++total_number;
     }
     current->next_node = nullptr;
 
-      /*
-        if (other.first_node_ptr != nullptr)
-        {
+    /*
+      if (other.first_node_ptr != nullptr)
+      {
 
-            Node *other_ptr_toCopy = other.first_node_ptr;
-            Node *otherPtrTemp = nullptr;
+          Node *other_ptr_toCopy = other.first_node_ptr;
+          Node *otherPtrTemp = nullptr;
 
-            while (other_ptr_toCopy != nullptr)
-            {
-                otherPtrTemp = new Node(other_ptr_toCopy->data);
+          while (other_ptr_toCopy != nullptr)
+          {
+              otherPtrTemp = new Node(other_ptr_toCopy->data);
 
-                if (first_node_ptr == nullptr)
-                {
-                    first_node_ptr = otherPtrTemp;
-                    last_node_ptr = otherPtrTemp;
-                }
-                else
-                {
-                    last_node_ptr->next_node = otherPtrTemp;
-                    last_node_ptr = otherPtrTemp;
-                }
+              if (first_node_ptr == nullptr)
+              {
+                  first_node_ptr = otherPtrTemp;
+                  last_node_ptr = otherPtrTemp;
+              }
+              else
+              {
+                  last_node_ptr->next_node = otherPtrTemp;
+                  last_node_ptr = otherPtrTemp;
+              }
 
-                other_ptr_toCopy = other_ptr_toCopy->next_node;
-            }
+              other_ptr_toCopy = other_ptr_toCopy->next_node;
+          }
 
-            total_number = other.total_number;
-        }*/
-       
-    }
+          total_number = other.total_number;
+      }
+      
+  }*/
   ~List() { clear(); }
 
   void clear() {
@@ -167,23 +170,21 @@ public:
 
     return current_node_ptr->data;
   }
-  List &operator=(const List & rhs)
-  {
-     List temp(rhs);
-        Node *last = last_node_ptr;
-        last_node_ptr = temp.last_node_ptr;
-        temp.last_node_ptr = last;
+  List &operator=(const List &rhs) {
+    List temp(rhs);
+    Node *last = last_node_ptr;
+    last_node_ptr = temp.last_node_ptr;
+    temp.last_node_ptr = last;
 
-        Node *first = first_node_ptr;
-        first_node_ptr = temp.first_node_ptr;
-        temp.first_node_ptr = first;
+    Node *first = first_node_ptr;
+    first_node_ptr = temp.first_node_ptr;
+    temp.first_node_ptr = first;
 
-        size_t size = total_number;
-        total_number = temp.total_number;
-        temp.total_number = size;
+    size_t size = total_number;
+    total_number = temp.total_number;
+    temp.total_number = size;
 
-        return *this;
-
+    return *this;
   }
   Iterator begin() const { return Iterator(first_node_ptr); }
 
@@ -222,7 +223,6 @@ private:
   }
 
 private:
- 
   Iterator owl_iterator;
 };
 
